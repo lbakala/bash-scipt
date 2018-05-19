@@ -1,6 +1,6 @@
-
 # Bash-scipt
 Écrire un script qui permette de copier un fichier vers un répertoire de stockage.
+
 Syntaxe : copier fichier répertoire suffixe
 ##  Objectif :
 Le but de ce programme est de copier le fichier donné, dans le répertoire donné, 
@@ -25,15 +25,17 @@ le fichier copié portera le nom du fichier d'origine augmenté du suffixe.
 
 - Tester si le répertoire existe.
 
-> S'il n'existe pas demander si on doit le créer. (2) Vérifier la création du répertoire, 
-> si impossibilité afficher un message d'erreur et sortir du programme. (1)
+> S'il n'existe pas demander si on doit le créer. (2) 
+> Vérifier la création du répertoire, si impossibilité afficher un message 
+> d'erreur et sortir du programme. (1)
 
  - Tester si on a le droit d'écriture dans le répertoire.
 
 > Si pas de droit d'écriture sur le répertoire proposer de changer les droits du répertoire (2). 
 > Si la réponse est négative afficher un message et sortir du programme. (1) 
-> Avant d'effectuer la copie demander confirmation. (2) Effectuer la copie du fichier. Modifier les
-> droits sur le fichier sauvegardé afin que seul le propriétaire ait le droit de lecture (et rien d'autre !)
+> Avant d'effectuer la copie demander confirmation. (2)
+>  Effectuer la copie du fichier. Modifier les droits sur le fichier sauvegardé afin que 
+>  seul le propriétaire ait le droit de lecture (et rien d'autre !)
 
 .
 Afficher, au format long, les caractéristiques du fichier sauvegardé en habillant le résultat avec
