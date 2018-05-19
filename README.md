@@ -41,11 +41,13 @@ le fichier copié portera le nom du fichier d'origine augmenté du suffixe.
 Afficher, au format long, les caractéristiques du fichier sauvegardé en habillant le résultat avec
 commentaires et mise en forme.
 ## Remarques :
-(1) Les sorties sur erreur donnent lieu à un code de retour « FAUX »
-(2) Les réponses attendues sont « oui » ou « non ». [optionnel : on accepte aussi « yes » et « no »]
-Si la réponse est « oui » on continue.
-Si la réponse est « non » on abandonne le programme en affichant un message de politesse.
-Si la réponse est ni « oui » ni « non » redemander. Au bout de trois réponses incomprises
-avertissez l'opérateur que l'on abandonne le programme.
+       (1)Les sorties sur erreur donnent lieu à un code de retour «FAUX»
+       (2)Les réponses attendues sont « oui » ou «non». 
+        Si la réponse est « oui » on continue.
+        Si la réponse est « non » on abandonne le programme en affichant un message de politesse.
+        Si la réponse est ni « oui » ni « non » redemander. Au bout de trois réponses incomprises
+        avertissez l'opérateur que l'on abandonne le programme.
+
+
 
 
