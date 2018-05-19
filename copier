@@ -1,0 +1,96 @@
+#!/bin/bash
+fichier=$1
+repertoire=$2
+suffixe=$3
+if [ $# -ne 3 ];then
+      echo "Vous devez fournir un nom de fichier, un repertoire de destination et un suffixe"
+      echo -e "Entrer le nom du fichier : \c"
+      read fichier
+           echo -e "Entrer le nom du repertoire : \c"
+           read repertoire
+                 echo -e "Entrer le nom du suffixe : \c"
+                 read suffixe
+fi
+if [ -f $fichier ];then
+       echo "le fichier $fichier existe"
+       if [ -r $fichier ];then
+             echo "Vous possédez les droits de lecture sur le fichier $fichier"
+       else
+            echo "Ajout des droits de lecture sur le fichier $fichier"
+            chmod u+r $fichier
+       fi
+else
+echo -e  "Erreur : le fichier fourni n'existe pas"
+   typeset -i compteur=0
+   while :
+   do
+      echo -e "Veuillez entrer le nom d'un autre fichier valide : \c"
+      read fichier
+         if [ ! -f $fichier ];then
+             [ $compteur -eq 2 ] && { echo "Erreur suite à trois tentatives infructueuses, le programme doit se fermer"; exit 1 ; }
+         else
+             chmod u+r $fichier
+             break
+        fi
+   ((compteur=compteur+1))
+   done
+fi
+#####################################
+function validation {
+q=$1
+t1=$2
+t2=$3
+t3=$3
+typeset -i c=0
+while :
+do
+	echo  "`tput setaf 1`$q`tput sgr0`"
+	read reponse
+	case $reponse in
+			oui )
+			    eval $(echo $t1)
+			    break ;;
+			non )
+			    eval $(echo $t2)
+			    break ;;
+			*)
+			   [ $c -eq 2 ] && { eval $(echo $t3); exit 1 ; }
+			;;
+	esac ;
+	((c=c+1))
+done
+}
+#####################################
+if [ ! -d $repertoire ]
+then
+echo "Le repertoire \"$repertoire\" n'existe pas"
+#
+      question="Souhaitez-vous le créer  \"$repertoire\" ? (oui/non) \c"
+#
+      trtmoui="mkdir $repertoire || { echo \"Erreur : créaation du repertoire $repertoire impossible\"; exit 2; } && { echo \"Creation du repertoire\";ls -ld $repertoire; }"
+#
+      trtmnon="echo \"Ce repertoire est requis pour la suite du programme. Fin des opérations : BYE\";exit"
+#
+      trtmechec="echo \"Ce repertoire est requis pour la suite du programme, BYE\""
+#
+      validation "$question" "$trtmoui" "$trtmnon"  "$trtmechec"
+fi
+
+if [ ! -w $repertoire ];then
+echo "Vous n\'avez pas les droits d'écriture sur le repertoire $repertoire"
+#
+      question="Voulez-vous ajouter les droits en écriture au repertoire \"$repertoire\" ? (oui/non) \c"
+#
+      trtmoui="chmod u+w $repertoire && ls -ld $repertoire || { echo \"Erreur : vous n\'avez pas les droits pour executer cette opération\"; exit 2; }"
+#
+      validation "$question" "$trtmoui" "$trtmnon"  "$trtmechec"
+fi
+      question="Voulez-vous copier le fichier \"$fichier\" vers le dossier \"$repertoire\" sous le nom \"$fichier.$suffixe\" : ? (oui|non) \c" 
+#
+      trtmoui="cp $fichier $repertoire\/$fichier.$suffixe;chmod 400 $repertoire/$fichier.$suffixe;ls -l $repertoire"
+#
+      trtmnon="echo \"Vous avez choisi de ne pas poursuivre la copie du fichier, le programme va se terminer\";exit"
+#
+      trtmechec="echo  \"Le programme va se terminer suite à trois tentatives infructueuses"
+#
+      validation "$question" "$trtmoui" "$trtmnon"  "$trtmechec"
