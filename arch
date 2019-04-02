@@ -1,6 +1,8 @@
+parted /dev/sda mklabel gpt
 parted -s /dev/sda unit MB mkpart primary 1 500
 parted -s /dev/sda unit MB mkpart primary 500 628
 parted -s /dev/sda unit MB mkpart primary 628 100%
+parted -s /dev/sda set 3 lvm on
 pvcreate /dev/sda3
 vgcreate systemarch /dev/sda3
 lvcreate -L1024 -nswap systemarch 
