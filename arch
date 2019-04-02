@@ -1,0 +1,20 @@
+parted -s /dev/sda unit MB mkpart primary 1 500
+parted -s /dev/sda unit MB mkpart primary 500 628
+parted -s /dev/sda unit MB mkpart primary 628 100%
+pvcreate /dev/sda3
+vgcreate systemarch /dev/sda3
+lvcreate -L1024 -nswap systemarch 
+lvcreate -L4096 -nroot systemarch 
+mkfs.xfs /dev/sda1
+mkfs.fat -F32 /dev/sda2
+mkfs.xfs /dev/systemarch/root
+mkswap /dev/systemarch/swap
+swapon /dev/systemarch/swap
+mount /dev/systemarch/root /mnt
+mkdir /mnt/boot
+mount /dev/sda1 /mnt/boot
+mkdir /mnt/boot/efi
+mount /dev/sda2 /mnt/boot/efi
+pacstrap /mnt base base-devel efibootmgr vim btrfs-progs --noconfirm
+genfstab -U -p /mnt > /mnt/etc/fstab
+arch-chroot /mnt /bin/bash
