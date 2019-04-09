@@ -28,7 +28,8 @@ pacstrap /mnt base base-devel efibootmgr vim btrfs-progs --noconfirm
 genfstab -U -p /mnt > /mnt/etc/fstab
 arch-chroot /mnt /bin/bash
 cp /etc/mkinitcpio.conf /etc/mkinitcpio.conf.origin
-[[ $1 -eq "gpt" ]] && { sed -i '/^#/d' /etc/mkinitcpio.conf; sed -i 's/filesystems/lvm2 filesystems/g' /etc/mkinitcpio.conf ; }
+sed -i '/^#/d' /etc/mkinitcpio.conf
+sed -i 's/filesystems/lvm2 filesystems/g' /etc/mkinitcpio.conf 
 mkinitcpio -p linux
 pacman -S grub
 [[ $1 -eq "gpt" ]] && grub-install --target=x86_64-efi --efi-directory=/boot/efi || grub-install /dev/sda
