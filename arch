@@ -7,7 +7,7 @@
 #
 #
 #
-[[ $1 == "gtp" -o $1 == "msdos" ]] && { echo "arch.install msdos ou gtp"; exit; }
+[[ $1 != "gtp" -o $1 != "msdos" ]] && { echo "arch.install msdos ou gtp"; exit; }
 [[ $1 == "gpt" ]] && { parted /dev/sda mklabel gpt; parted -s /dev/sda unit MB mkpart primary 1 500; parted -s /dev/sda unit MB mkpart primary 500 628; parted -s /dev/sda unit MB mkpart primary 628 100%; mkfs.fat -F32 /dev/sda2 ; }
 [[ $1 == "msdos" ]] && { parted /dev/sda mklabel msdos; parted -s /dev/sda unit MB mkpart primary 1 500; parted -s /dev/sda unit MB mkpart primary 500 100% ; }
 mkfs.xfs /dev/sda1
