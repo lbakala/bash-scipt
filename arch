@@ -31,9 +31,8 @@ sed -i '/^#/d' /etc/mkinitcpio.conf
 sed -i 's/filesystems/lvm2 filesystems/g' /etc/mkinitcpio.conf 
 mkinitcpio -p linux
 pacman -S grub
-[[ $1 -eq "gpt" ]] && grub-install --target=x86_64-efi --efi-directory=/boot/efi || grub-install /dev/sda
+[[ $1 -eq "gpt" ]] && { grub-install --target=x86_64-efi --efi-directory=/boot/efi;  grub-mkconfig -o  /boot/efi/EFI/arch/grub.cfg ; }  || { grub-install --target=i386-pc /dev/sda; }
 grub-mkconfig -o /boot/grub/grub.cfg
-[[ $1 -eq "gpt" ]] grub-mkconfig -o  /boot/efi/EFI/arch/grub.cfg
 echo "arch.localhost" > /etc/hostname 
 sed -i 's/#fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/g' /etc/locale.gen
 locale-gen
