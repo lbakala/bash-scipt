@@ -15,7 +15,7 @@ parted -s /dev/sda set $numpart lvm on
 pvcreate /dev/sda$numpart
 vgcreate systemarch /dev/sda$numpart
 lvcreate -L1024 -nswap systemarch 
-lvcreate -L4096 -nroot systemarch 
+lvcreate -l100%FREE -nroot systemarch 
 mkfs.xfs /dev/systemarch/root
 mkswap /dev/systemarch/swap
 swapon /dev/systemarch/swap
@@ -42,7 +42,6 @@ ln -s /usr/share/zoneinfo/Europe/Paris  /etc/localtime
 pacman -S bash-completion openssh sudo dhclient vim --noconfirm
 nlink=$(ip a | grep ens | head -n 1 | awk -F" " '{print $2}'|tr -d ':')
 echo -e "[Match]\nname=$link\n[Network]\nDHCP=yes" > /etc/systemd/network/$nlink.network
-systemctl restart systemd-networkd
 systemctl enable  systemd-networkd
 echo -e "toto\ntoto" | passwd
 
